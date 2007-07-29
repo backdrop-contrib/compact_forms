@@ -1,0 +1,199 @@
+<?php // $Id$
+/*
+    Compact Forms Drupal module
+    Copyright 2007 Tom Sundström
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2 as
+    published by the Free Software Foundation.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public
+    License along with this program; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
+*/
+
+
+/**
+ * Implementation of hook_help().
+ */
+function compact_forms_help($section) {
+  switch ($section) {
+    case 'admin/help#help':
+      // TODO: expand
+      $output = '<p>'. t('Makes form fields compact by overlaying the field label on top the field itself using jQuery.') . '</p>';
+      return $output;
+  }
+}
+
+
+/**
+ * Implementation of hook_perm().
+ */
+function compact_forms_perm() {
+  return array(
+    'administer Compact Forms',
+  );
+}
+
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function compact_forms_form_alter($form_id, &$form) {
+  $field_size = variable_get('compact_forms_field_size', '');
+  $descriptions = variable_get('compact_forms_descriptions', 1);
+  if (empty($field_size) && !empty($descriptions)) {
+    // Nothing to alter.
+    return;
+  }
+
+  static $ids = NULL;
+  if ($ids === NULL) {
+    $ids = explode("\n", str_replace('-', '_', variable_get('compact_forms_ids', "user-login-form")));
+  }
+  if (in_array($form_id, $ids)) {
+    _compact_forms_resize_fields($form, $field_size, $descriptions);
+  }
+}
+
+
+/**
+ * Iterator.
+ */
+function _compact_forms_resize_fields(&$subform, $field_size, $descriptions) {
+  if (is_array($subform) && !empty($subform)) {
+    foreach($subform as $key => $field) {
+      switch($field['#type']) {
+
+        case 'fieldset':
+          _compact_forms_resize_fields($subform[$key], $field_size);
+          break;
+        
+        case 'textfield':
+        case 'password':
+        case 'password_confirm':
+          if (!empty($field_size)) {
+            $subform[$key]['#size'] = $field_size; 
+          }
+          if (empty($descriptions)) {
+            unset($subform[$key]['#description']);
+          }
+          break;
+      }
+    }  
+  }
+}
+
+/**
+ * Implementation of hook_menu().
+ */
+function compact_forms_menu($may_cache) {
+  global $user;
+  $items = array();
+
+  if (!$may_cache) {
+    
+    _compact_forms_include_js();
+
+    $items[] = array(
+      'title' => t('Compact Forms'),
+      'path' => 'admin/settings/compact_forms',
+      'description' => t('Makes form fields compact by overlaying the field label on top the field itself using jQuery.'),
+      'callback' => 'drupal_get_form',
+      'callback arguments' => 'compact_forms_admin_form',
+      'access' => user_access('administer Compact Forms'),
+    );
+  }
+
+  return $items;
+}
+
+
+/**
+ * Compact Forms admin settings.
+ */
+function compact_forms_admin_form() {
+
+  $form['compact_forms_ids'] = array(
+    '#type' => 'textarea',
+    '#title' => t('Form ID:s'),
+    '#rows' => 3,
+    '#cols' => 40,
+    '#default_value' => variable_get('compact_forms_ids', "user-login-form"),
+    '#description' => 'Enter the CSS #id of the forms that you want to activate compact_forms for. One per line.',
+  );
+  
+  $form['compact_forms_stars'] = array(
+    '#title' => t('"Required field" - stars'),
+    '#type' => 'radios',
+    '#options' => array(
+      0 => t('Remove "required" stars'),
+      1 => t('Leave "required" stars attached to label'),
+      2 => t('Insert "required" stars after the field'),
+    ),
+    '#default_value' => variable_get('compact_forms_stars', 2),
+    '#description' => t('How to deal with the stars added by Drupal to indicate required fields.'),
+  );
+  
+  $form['compact_forms_colons'] = array(
+    '#title' => t('Trailing colons in labels'),
+    '#type' => 'radios',
+     '#options' => array(
+      0 => t('Remove trailing colons from the label'),
+      1 => t('Keep trailing colons'),
+    ),
+    '#default_value' => variable_get('compact_forms_colons', 0),
+  );
+
+  $form['compact_forms_field_size'] = array(
+    '#title' => t('Textfield size'),
+    '#type' => 'textfield',
+    '#size' => 3,
+    '#default_value' => variable_get('compact_forms_field_size', ''),
+    '#description' => t('Optionally override the width of all text fields in the selected forms'),
+  );
+  $form['compact_forms_descriptions'] = array(
+    '#title' => t('Textfield descriptions'),
+    '#type' => 'radios',
+    '#options' => array(
+      0 => t('Hide descriptions'),
+      1 => t('Show descriptions'),
+    ),
+    '#default_value' => variable_get('compact_forms_descriptions', 1),
+    '#description' => t('Optionally hide descriptions of all textfields (in general not recommended).'),
+  );
+  
+  return system_settings_form($form);
+}
+
+
+/**
+ * Include JavaScript and CSS and attach behaviours to all selected forms.
+ */
+function _compact_forms_include_js() {
+    $ids = explode("\n", variable_get('compact_forms_ids', "user-login-form"));
+    $inline_js = '';
+    
+    if (is_array($ids) && !empty($ids)) {
+      $stars = variable_get('compact_forms_stars', 2);
+      $colons = variable_get('compact_forms_colons', 0);
+      
+      foreach ($ids as $id) {
+        $id = trim($id);
+        if (!empty($id)) {
+         
+          $inline_js .= '$("#' . $id. '").compactForm(' . $stars . ', ' . $colons . ');';
+        }
+      }
+    }
+    if (!empty($inline_js)) {
+      drupal_add_js(drupal_get_path('module', 'compact_forms') . '/compact_forms.js');
+      drupal_add_css(drupal_get_path('module', 'compact_forms') . '/compact_forms.css');
+      drupal_add_js('$(document).ready(function() {'. $inline_js . '});', 'inline');      
+    }
+}

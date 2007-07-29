@@ -1,0 +1,3 @@
+; $Id$
+name = Compact Forms
+description = "Makes form fields compact by overlaying the field label on top the field itself using jQuery."
