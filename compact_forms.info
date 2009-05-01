@@ -1,3 +1,4 @@
 ; $Id$
 name = Compact Forms
-description = "Makes form fields compact by overlaying the field label on top the field itself using jQuery."
+description = Overlays form fields with their respective labels using JavaScript.
+package = User interface

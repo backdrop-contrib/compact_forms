@@ -1,0 +1,19 @@
+// $Id$
+
+Compact Forms x.x-x.x, xxxx-xx-xx
+---------------------------------
+
+
+Compact Forms 5.x-1.x, xxxx-xx-xx
+---------------------------------
+#404132 by sun: Major rewrite:
+  - Proper use of Drupal.behaviors.
+  - Split administrative functions into include file.
+  - Code clean-up.
+
+
+Compact Forms 5.x-1.0, 2007-07-29
+---------------------------------
+Initial release of Compact Forms.
+
+
