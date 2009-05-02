@@ -24,6 +24,29 @@ function compact_forms_perm() {
 }
 
 /**
+ * Implementation of hook_menu().
+ */
+function compact_forms_menu() {
+  $items['admin/settings/compact_forms'] = array(
+    'title' => 'Compact Forms',
+    'description' => 'Configure Compact Forms settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('compact_forms_admin_form'),
+    'access arguments' => array('administer Compact Forms'),
+    'file' => 'compact_forms.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function compact_forms_init() {
+  // Load our behavior.
+  _compact_forms_include_js();
+}
+
+/**
  * Implementation of hook_form_alter().
  */
 function compact_forms_form_alter(&$form, $form_state, $form_id) {
@@ -73,29 +96,6 @@ function _compact_forms_resize_fields(&$form, $field_size, $descriptions) {
         break;
     }
   }
-}
-
-/**
- * Implementation of hook_menu().
- */
-function compact_forms_menu() {
-  $items['admin/settings/compact_forms'] = array(
-    'title' => 'Compact Forms',
-    'description' => 'Configure Compact Forms settings.',
-    'page callback' => 'drupal_get_form',
-    'page arguments' => array('compact_forms_admin_form'),
-    'access arguments' => array('administer Compact Forms'),
-    'file' => 'compact_forms.admin.inc',
-  );
-  return $items;
-}
-
-/**
- * Implementation of hook_init().
- */
-function compact_forms_init() {
-  // Load our behavior.
-  _compact_forms_include_js();
 }
 
 /**
