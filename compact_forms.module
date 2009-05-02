@@ -26,7 +26,7 @@ function compact_forms_perm() {
 /**
  * Implementation of hook_form_alter().
  */
-function compact_forms_form_alter($form_id, &$form) {
+function compact_forms_form_alter(&$form, $form_state, $form_id) {
   static $ids;
 
   $field_size = variable_get('compact_forms_field_size', '');
@@ -78,28 +78,24 @@ function _compact_forms_resize_fields(&$form, $field_size, $descriptions) {
 /**
  * Implementation of hook_menu().
  */
-function compact_forms_menu($may_cache) {
-  global $user;
-
-  $items = array();
-  if ($may_cache) {
-    $items[] = array(
-      'title' => t('Compact Forms'),
-      'path' => 'admin/settings/compact_forms',
-      'description' => t('Makes form fields compact by overlaying the field label on top the field itself using jQuery.'),
-      'callback' => 'drupal_get_form',
-      'callback arguments' => 'compact_forms_admin_form',
-      'access' => user_access('administer Compact Forms'),
-    );
-  }
-  else {
-    if (strpos($_GET['q'], 'admin/settings/compact_forms') === 0) {
-      require_once drupal_get_path('module', 'compact_forms') . '/compact_forms.admin.inc';
-    }
-    // Load our behavior.
-    _compact_forms_include_js();
-  }
+function compact_forms_menu() {
+  $items['admin/settings/compact_forms'] = array(
+    'title' => 'Compact Forms',
+    'description' => 'Configure Compact Forms settings.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('compact_forms_admin_form'),
+    'access arguments' => array('administer Compact Forms'),
+    'file' => 'compact_forms.admin.inc',
+  );
   return $items;
+}
+
+/**
+ * Implementation of hook_init().
+ */
+function compact_forms_init() {
+  // Load our behavior.
+  _compact_forms_include_js();
 }
 
 /**
