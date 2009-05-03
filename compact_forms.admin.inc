@@ -12,48 +12,41 @@
 function compact_forms_admin_form() {
   $form['compact_forms_ids'] = array(
     '#type' => 'textarea',
-    '#title' => t('Form IDs'),
+    '#title' => t('Form CSS ids'),
     '#rows' => 3,
     '#cols' => 40,
     '#default_value' => variable_get('compact_forms_ids', 'user-login-form'),
-    '#description' => t('Enter the CSS #id of the forms that you want to activate compact_forms for. One per line.'),
-  );
-  $form['compact_forms_stars'] = array(
-    '#title' => t('"Required field" - stars'),
-    '#type' => 'radios',
-    '#options' => array(
-      0 => t('Remove "required" stars'),
-      1 => t('Leave "required" stars attached to label'),
-      2 => t('Insert "required" stars after the field'),
-    ),
-    '#default_value' => variable_get('compact_forms_stars', 2),
-    '#description' => t('How to deal with the stars added by Drupal to indicate required fields.'),
+    '#description' => t('The CSS ids of forms that shall be displayed compact. One per line.'),
   );
   $form['compact_forms_colons'] = array(
-    '#title' => t('Trailing colons in labels'),
-    '#type' => 'radios',
-    '#options' => array(
-      0 => t('Remove trailing colons from the label'),
-      1 => t('Keep trailing colons'),
-    ),
+    '#type' => 'checkbox',
+    '#title' => t('Keep trailing colons in labels'),
     '#default_value' => variable_get('compact_forms_colons', 0),
+    '#description' => t('When enabled, trailing colons after the field label will be removed.'),
+  );
+  $form['compact_forms_stars'] = array(
+    '#type' => 'radios',
+    '#title' => t('Required field handling'),
+    '#options' => array(
+      0 => t('Remove star'),
+      1 => t('Leave star attached to label'),
+      2 => t('Append star after the field'),
+    ),
+    '#default_value' => variable_get('compact_forms_stars', 2),
+    '#description' => t('Defines how required field indicators should be altered.'),
   );
   $form['compact_forms_field_size'] = array(
-    '#title' => t('Textfield size'),
     '#type' => 'textfield',
+    '#title' => t('Textfield size'),
     '#size' => 3,
     '#default_value' => variable_get('compact_forms_field_size', ''),
-    '#description' => t('Optionally override the width of all text fields in the selected forms'),
+    '#description' => t("Optionally override the 'size' attribute (width) of all text fields in compact forms. Leave empty to use the default sizes defined by the original forms."),
   );
   $form['compact_forms_descriptions'] = array(
-    '#title' => t('Textfield descriptions'),
-    '#type' => 'radios',
-    '#options' => array(
-      0 => t('Hide descriptions'),
-      1 => t('Show descriptions'),
-    ),
+    '#type' => 'checkbox',
+    '#title' => t('Show field descriptions'),
     '#default_value' => variable_get('compact_forms_descriptions', 1),
-    '#description' => t('Optionally hide descriptions of all textfields (in general not recommended).'),
+    '#description' => t('When enabled, form element descriptions will be hidden.'),
   );
 
   return system_settings_form($form);

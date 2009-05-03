@@ -9,9 +9,9 @@
 /**
  * Implementation of hook_help().
  */
-function compact_forms_help($section) {
-  switch ($section) {
-    case 'admin/help#help':
+function compact_forms_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#compact_forms':
       return '<p>' . t('Makes form fields compact by overlaying the field label on top the field itself using jQuery.') . '</p>';
   }
 }
