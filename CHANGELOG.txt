@@ -8,7 +8,7 @@ Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
 
 
-Compact Forms 6.x-1.0, 2009-05-03
+Compact Forms 6.x-1.1, 2009-05-03
 ---------------------------------
 #404132 by sun: Fixed configuration settings and implementation of hook_help().
 #404132 by sun: Fixed page requisites only need to be loaded on pages containing
