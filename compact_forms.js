@@ -2,8 +2,6 @@
 
 (function ($) {
 
-Drupal.behaviors = Drupal.behaviors || {}; // D5 only.
-
 /**
  * Compact Forms jQuery plugin.
  */
@@ -63,10 +61,5 @@ Drupal.behaviors.compactForms = function (context) {
     $('#' + this, context).compactForm(Drupal.settings.compactForms.stars, Drupal.settings.compactForms.colons);
   });
 }
-
-// D5 only.
-$(document).ready(function () {
-  Drupal.behaviors.compactForms(this);
-});
 
 })(jQuery);

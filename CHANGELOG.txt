@@ -6,6 +6,8 @@ Compact Forms x.x-x.x, xxxx-xx-xx
 
 Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
+#404132 by sun: Fixed page requisites only need to be loaded on pages containing
+  configured forms.
 #404132 by sun: Changed order of functions.
 #243952 by sun: Ported to 6.x.
 #404132 by sun: Major rewrite:

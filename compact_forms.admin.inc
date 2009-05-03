@@ -16,7 +16,7 @@ function compact_forms_admin_form() {
     '#rows' => 3,
     '#cols' => 40,
     '#default_value' => variable_get('compact_forms_ids', 'user-login-form'),
-    '#description' => 'Enter the CSS #id of the forms that you want to activate compact_forms for. One per line.',
+    '#description' => t('Enter the CSS #id of the forms that you want to activate compact_forms for. One per line.'),
   );
   $form['compact_forms_stars'] = array(
     '#title' => t('"Required field" - stars'),
