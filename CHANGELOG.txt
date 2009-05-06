@@ -6,6 +6,10 @@ Compact Forms x.x-x.x, xxxx-xx-xx
 
 Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
+
+
+Compact Forms 6.x-1.2, 2009-05-06
+---------------------------------
 #452196 by sun: Fixed JavaScript to re-use existing jQuery objects.
 #452946 by sun: Fixed $form['#id'] not respected when testing form ids.
 
