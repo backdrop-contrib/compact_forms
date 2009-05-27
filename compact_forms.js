@@ -6,13 +6,14 @@
  * Compact Forms jQuery plugin.
  */
 $.fn.compactForm = function (stars, colons) {
-  var stars = stars || 0;
-  var colons = colons || 0;
+  stars = stars || 0;
+  colons = colons || 0;
 
-  this.each(function (index) {
+  this.each(function () {
     $(this).addClass('compact-form').find('label').each(function () {
+      var context = this.form;
       var $label = $(this);
-      var $field = $('#' + $label.attr('for'));
+      var $field = $('#' + $label.attr('for'), context);
       if ($field.attr('type') != 'text' && $field.attr('type') != 'password') {
         return;
       }
@@ -57,9 +58,7 @@ Drupal.behaviors.compactForms = function (context) {
   if (!Drupal.settings || !Drupal.settings.compactForms) {
     return;
   }
-  $.each(Drupal.settings.compactForms.forms, function () {
-    $('#' + this, context).compactForm(Drupal.settings.compactForms.stars, Drupal.settings.compactForms.colons);
-  });
+  $('#' + Drupal.settings.compactForms.forms.join(',#'), context).compactForm(Drupal.settings.compactForms.stars, Drupal.settings.compactForms.colons);
 };
 
 })(jQuery);
