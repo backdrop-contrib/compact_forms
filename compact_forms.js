@@ -14,7 +14,7 @@ $.fn.compactForm = function (stars, colons) {
       var context = this.form;
       var $label = $(this);
       var $field = $('#' + $label.attr('for'), context);
-      if ($field.attr('type') != 'text' && $field.attr('type') != 'password') {
+      if (!$field.is('input:text,input:password,textarea')) {
         return;
       }
 

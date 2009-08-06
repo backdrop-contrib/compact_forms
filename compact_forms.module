@@ -96,6 +96,7 @@ function _compact_forms_resize_fields(&$form, $field_size, $descriptions) {
         break;
 
       case 'textfield':
+      case 'textarea':
       case 'password':
       case 'password_confirm':
         if (!empty($field_size)) {
