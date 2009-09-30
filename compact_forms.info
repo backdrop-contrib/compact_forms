@@ -2,4 +2,5 @@
 name = Compact Forms
 description = Overlays form fields with their respective labels using JavaScript.
 package = User interface
-core = 6.x
+core = 7.x
+files[] = compact_forms.module

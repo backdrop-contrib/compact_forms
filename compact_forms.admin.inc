@@ -9,7 +9,7 @@
 /**
  * Form builder function for Compact Forms settings.
  */
-function compact_forms_admin_form() {
+function compact_forms_admin_form($form, &$form_state) {
   $form['compact_forms_ids'] = array(
     '#type' => 'textarea',
     '#title' => t('Form CSS ids'),
@@ -17,12 +17,6 @@ function compact_forms_admin_form() {
     '#cols' => 40,
     '#default_value' => variable_get('compact_forms_ids', 'user-login-form'),
     '#description' => t('The CSS ids of forms that shall be displayed compact. One per line.'),
-  );
-  $form['compact_forms_colons'] = array(
-    '#type' => 'checkbox',
-    '#title' => t('Keep trailing colons in labels'),
-    '#default_value' => variable_get('compact_forms_colons', 0),
-    '#description' => t('When enabled, trailing colons after the field label will be removed.'),
   );
   $form['compact_forms_stars'] = array(
     '#type' => 'radios',

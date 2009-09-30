@@ -5,9 +5,8 @@
 /**
  * Compact Forms jQuery plugin.
  */
-$.fn.compactForm = function (stars, colons) {
+$.fn.compactForm = function (stars) {
   stars = stars || 0;
-  colons = colons || 0;
 
   this.each(function () {
     $(this).addClass('compact-form').find('label').each(function () {
@@ -33,12 +32,6 @@ $.fn.compactForm = function (stars, colons) {
         $label.find('.form-required').insertAfter($field).prepend('&nbsp;');
       }
 
-      if (colons === 0) {
-        var lbl = $label.html();
-        lbl = lbl.replace(/:/,' ');
-        $label.html(lbl);
-      }
-
       $field.focus(function () {
         if($(this).val() === '') {
           $label.fadeOut('fast');
@@ -54,11 +47,13 @@ $.fn.compactForm = function (stars, colons) {
   });
 };
 
-Drupal.behaviors.compactForms = function (context) {
-  if (!Drupal.settings || !Drupal.settings.compactForms) {
-    return;
+Drupal.behaviors.compactForms = {
+  attach: function (context, settings) {
+    if (!settings || !settings.compactForms) {
+      return;
+    }
+    $('#' + settings.compactForms.forms.join(',#'), context).compactForm(settings.compactForms.stars);
   }
-  $('#' + Drupal.settings.compactForms.forms.join(',#'), context).compactForm(Drupal.settings.compactForms.stars, Drupal.settings.compactForms.colons);
 };
 
 })(jQuery);

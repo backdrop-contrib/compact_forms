@@ -17,17 +17,22 @@ function compact_forms_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_perm().
+ * Implementation of hook_permission().
  */
-function compact_forms_perm() {
-  return array('administer Compact Forms');
+function compact_forms_permission() {
+  return array(
+    'administer Compact Forms' => array(
+      'title' => t('Administer Compact Forms'),
+      'description' => t('Configure forms to display compact and their behavior.'),
+    ),
+  );
 }
 
 /**
  * Implementation of hook_menu().
  */
 function compact_forms_menu() {
-  $items['admin/settings/compact_forms'] = array(
+  $items['admin/config/content/compact_forms'] = array(
     'title' => 'Compact Forms',
     'description' => 'Configure Compact Forms settings.',
     'page callback' => 'drupal_get_form',
@@ -125,7 +130,6 @@ function _compact_forms_include_js($css_ids) {
     'compactForms' => array(
       'forms' => $css_ids,
       'stars' => (int) variable_get('compact_forms_stars', 2),
-      'colons' => (int) variable_get('compact_forms_colons', 0),
     ),
   );
   drupal_add_js($settings, 'setting');

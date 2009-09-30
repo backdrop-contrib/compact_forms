@@ -4,6 +4,11 @@ Compact Forms x.x-x.x, xxxx-xx-xx
 ---------------------------------
 
 
+Compact Forms 7.x-1.x, xxxx-xx-xx
+---------------------------------
+by sun: Ported to Drupal 7.
+
+
 Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
 #523230 by LaurentB, sun: Added support for textareas.
