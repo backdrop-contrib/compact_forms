@@ -12,8 +12,11 @@ $.fn.compactForm = function (stars) {
     $(this).addClass('compact-form').find('label').each(function () {
       var context = this.form;
       var $label = $(this);
+      if (!$label.attr('for')) {
+        return;
+      }
       var $field = $('#' + $label.attr('for'), context);
-      if (!$field.is('input:text,input:password,textarea')) {
+      if (!$field.length || !$field.is('input:text,input:password,textarea')) {
         return;
       }
 

@@ -11,6 +11,7 @@ by sun: Ported to Drupal 7.
 
 Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
+#765840 by chriscalip, sun: Fixed uncaught exception/syntax error.
 #523230 by LaurentB, sun: Added support for textareas.
 #251421 by sun: Fixed multiple forms with same ID are not compacted.
 
