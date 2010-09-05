@@ -12,35 +12,34 @@
 function compact_forms_admin_form($form, &$form_state) {
   $form['compact_forms_ids'] = array(
     '#type' => 'textarea',
-    '#title' => t('Form CSS ids'),
+    '#title' => t('Form CSS IDs'),
     '#rows' => 3,
     '#cols' => 40,
     '#default_value' => variable_get('compact_forms_ids', 'user-login-form'),
-    '#description' => t('The CSS ids of forms that shall be displayed compact. One per line.'),
-  );
-  $form['compact_forms_stars'] = array(
-    '#type' => 'radios',
-    '#title' => t('Required field handling'),
-    '#options' => array(
-      0 => t('Remove star'),
-      1 => t('Leave star attached to label'),
-      2 => t('Append star after the field'),
-    ),
-    '#default_value' => variable_get('compact_forms_stars', 2),
-    '#description' => t('Defines how required field indicators should be altered.'),
-  );
-  $form['compact_forms_field_size'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Textfield size'),
-    '#size' => 3,
-    '#default_value' => variable_get('compact_forms_field_size', ''),
-    '#description' => t("Optionally override the 'size' attribute (width) of all text fields in compact forms. Leave empty to use the default sizes defined by the original forms."),
+    '#description' => t('Enter the CSS IDs of the forms to display compact. One per line.'),
   );
   $form['compact_forms_descriptions'] = array(
     '#type' => 'checkbox',
-    '#title' => t('Show field descriptions'),
+    '#title' => t('Hide field descriptions'),
     '#default_value' => variable_get('compact_forms_descriptions', 1),
-    '#description' => t('When enabled, form element descriptions will be hidden.'),
+  );
+  $form['compact_forms_stars'] = array(
+    '#type' => 'radios',
+    '#title' => t('Required field marker'),
+    '#options' => array(
+      0 => t('Remove star'),
+      1 => t('Leave star after the label'),
+      2 => t('Append star after the form element'),
+    ),
+    '#default_value' => variable_get('compact_forms_stars', 2),
+  );
+  $form['compact_forms_field_size'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Enforced text field size'),
+    '#size' => 3,
+    '#default_value' => variable_get('compact_forms_field_size', ''),
+    '#field_suffix' => t('characters'),
+    '#description' => t("If not empty, the size of all text fields in compact forms will be set to the entered size."),
   );
 
   return system_settings_form($form);
