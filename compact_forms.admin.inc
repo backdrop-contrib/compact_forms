@@ -7,7 +7,7 @@
  */
 
 /**
- * Form builder function for Compact Forms settings.
+ * Form constructor for Compact Forms settings.
  */
 function compact_forms_admin_form($form, &$form_state) {
   $form['compact_forms_ids'] = array(

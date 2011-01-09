@@ -7,7 +7,7 @@
  */
 
 /**
- * Implementation of hook_help().
+ * Implements hook_help().
  */
 function compact_forms_help($path, $arg) {
   switch ($path) {
@@ -17,7 +17,7 @@ function compact_forms_help($path, $arg) {
 }
 
 /**
- * Implementation of hook_permission().
+ * Implements hook_permission().
  */
 function compact_forms_permission() {
   return array(
@@ -29,10 +29,10 @@ function compact_forms_permission() {
 }
 
 /**
- * Implementation of hook_menu().
+ * Implements hook_menu().
  */
 function compact_forms_menu() {
-  $items['admin/config/content/compact_forms'] = array(
+  $items['admin/config/user-interface/compact_forms'] = array(
     'title' => 'Compact Forms',
     'description' => 'Configure Compact Forms settings.',
     'page callback' => 'drupal_get_form',
@@ -44,7 +44,7 @@ function compact_forms_menu() {
 }
 
 /**
- * Implementation of hook_form_alter().
+ * Implements hook_form_alter().
  */
 function compact_forms_form_alter(&$form, $form_state, $form_id) {
   static $css_ids, $form_ids, $loaded, $field_size, $descriptions;

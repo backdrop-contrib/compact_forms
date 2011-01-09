@@ -32,8 +32,8 @@ To submit bug reports and feature suggestions, or to track changes:
 
 -- CONFIGURATION --
 
-* Configure forms to display compact in Administer >> Site configuration >>
-  Compact Forms.
+* Configure forms to display compact in Administration » Configuration »
+  User interface » Compact Forms.
 
 
 -- CUSTOMIZATION --

@@ -1,9 +1,5 @@
 // $Id$
 
-Compact Forms x.x-x.x, xxxx-xx-xx
----------------------------------
-
-
 Compact Forms 7.x-1.x, xxxx-xx-xx
 ---------------------------------
 by sun: Ported to Drupal 7.
@@ -11,6 +7,7 @@ by sun: Ported to Drupal 7.
 
 Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
+by sun: Code clean-up.
 #851922 by greggles, sun: Added Form API property to disable behavior.
 #903122 by mstrelan, sun: Fixed browser autocomplete shows both label and value.
 #903132 by mstrelan: Fixed $field is always equal to activeElement.
