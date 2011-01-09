@@ -3,11 +3,11 @@
 
 /**
  * @file
- * Compact Forms installation functions.
+ * Installation functions for Compact Forms module.
  */
 
 /**
- * Implementation of hook_uninstall().
+ * Implements hook_uninstall().
  */
 function compact_forms_uninstall() {
   variable_del('compact_forms_colons');
