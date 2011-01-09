@@ -36,6 +36,15 @@ To submit bug reports and feature suggestions, or to track changes:
   Compact Forms.
 
 
+-- CUSTOMIZATION --
+
+* To programmatically disable the compact forms behavior on a particular form,
+  set the following property on the $form element in your form constructor
+  function or via hook_form_alter():
+
+    $form['#compact_forms'] = FALSE;
+
+
 -- CONTACT --
 
 Current maintainers:
