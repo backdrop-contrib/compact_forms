@@ -42,7 +42,7 @@ Current maintainers:
 * Daniel F. Kudwien (sun) - http://drupal.org/user/54136
 
 Previous maintainers:
-* Tom Sundström (tomsun) - http://drupal.org/user/63478
+* Tom SundstrÃ¶m (tomsun) - http://drupal.org/user/63478
 
 This project has been sponsored by:
 * UNLEASHED MIND
