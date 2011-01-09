@@ -21,8 +21,11 @@ $.fn.compactForm = function (stars) {
       if (!$field.length || !$field.is('input:text,input:password,textarea')) {
         return;
       }
+      // Store the initial field value, in case the browser is going to
+      // automatically fill it in upon focus.
+      var initial_value = $field.val();
 
-      if ($field.val() != '') {
+      if (initial_value != '') {
         // Firefox doesn't like .hide() here for some reason.
         $label.css('display', 'none');
       }
@@ -39,7 +42,13 @@ $.fn.compactForm = function (stars) {
       }
 
       $field.focus(function () {
-        if ($field.val() === '') {
+        // Some browsers (e.g., Firefox) are automatically inserting a stored
+        // username and password into login forms. In case the password field is
+        // manually emptied afterwards, and the user jumps back to the username
+        // field (without changing it), and forth to the password field, then
+        // the browser automatically re-inserts the password again. Therefore,
+        // we also need to test against the initial field value.
+        if ($field.val() === initial_value || $field.val() === '') {
           $label.fadeOut('fast');
         }
       });
