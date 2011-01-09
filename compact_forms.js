@@ -52,7 +52,7 @@ $.fn.compactForm = function (stars) {
 
       // Chrome adds passwords after page load, so we need to track changes.
       $field.change(function () {
-        if ($field != document.activeElement) {
+        if ($field.get(0) != document.activeElement) {
           if ($field.val() === '') {
             $label.fadeIn('fast');
           }

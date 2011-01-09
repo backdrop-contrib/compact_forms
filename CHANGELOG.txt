@@ -11,6 +11,7 @@ by sun: Ported to Drupal 7.
 
 Compact Forms 6.x-1.x, xxxx-xx-xx
 ---------------------------------
+#903132 by mstrelan: Fixed $field is always equal to activeElement.
 #682788 by sun: Fixed settings form.
 #461918 by neochief, mstrelan, sun: Fixed Chrome/Safari/Firefox browser quirks
   with user login form.
