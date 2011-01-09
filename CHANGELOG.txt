@@ -2,15 +2,20 @@
 
 Compact Forms 7.x-1.x, xxxx-xx-xx
 ---------------------------------
+
+
+Compact Forms 7.x-1.0, 2010-01-09
+---------------------------------
 by sun: Ported to Drupal 7.
 
 
-Compact Forms 6.x-1.x, xxxx-xx-xx
+Compact Forms 6.x-1.3, 2010-01-09
 ---------------------------------
 by sun: Code clean-up.
 #851922 by greggles, sun: Added Form API property to disable behavior.
 #903122 by mstrelan, sun: Fixed browser autocomplete shows both label and value.
 #903132 by mstrelan: Fixed $field is always equal to activeElement.
+#1002908 by jedihe, sun: Fixed variables not deleted upon uninstall.
 #682788 by sun: Fixed settings form.
 #461918 by neochief, mstrelan, sun: Fixed Chrome/Safari/Firefox browser quirks
   with user login form.
