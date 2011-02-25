@@ -1,4 +1,3 @@
-; $Id$
 name = Compact Forms
 description = Overlays form fields with their respective labels using JavaScript.
 package = User interface
