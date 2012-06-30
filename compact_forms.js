@@ -17,7 +17,7 @@ $.fn.compactForm = function (stars) {
         return;
       }
       var $field = $('#' + $label.attr('for'), context);
-      if (!$field.length || !$field.is('input:text,input:password,textarea')) {
+      if (!$field.length || !$field.is('input:text,input:password,textarea,input[type=email]')) {
         return;
       }
       // Store the initial field value, in case the browser is going to
