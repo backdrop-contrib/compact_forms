@@ -1,7 +1,7 @@
 
 (function ($) {
 
-Drupal.compactForms = {};
+Backdrop.compactForms = {};
 
 /**
  * Compact Forms jQuery plugin.
@@ -76,7 +76,7 @@ $.fn.compactForm = function (stars) {
 /**
  * Attach compact forms behavior to all enabled forms upon page load.
  */
-Drupal.behaviors.compactForms = {
+Backdrop.behaviors.compactForms = {
   attach: function (context, settings) {
     if (!settings || !settings.compactForms) {
       return;
@@ -86,7 +86,7 @@ Drupal.behaviors.compactForms = {
     // Safari adds passwords without triggering any event after page load.
     // We therefore need to wait a bit and then check for field values.
     if ($.browser.safari) {
-      setTimeout(Drupal.compactForms.fixSafari, 200);
+      setTimeout(Backdrop.compactForms.fixSafari, 200);
     }
   }
 };
@@ -96,7 +96,7 @@ Drupal.behaviors.compactForms = {
  *
  * @todo Convert $.fn.compactForm to always use a function like this.
  */
-Drupal.compactForms.fixSafari = function () {
+Backdrop.compactForms.fixSafari = function () {
   $('label.compact-form-label').each(function () {
     var $label = $(this);
     var context = this.form;

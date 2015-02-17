@@ -1,18 +1,19 @@
 <?php
-
 /**
  * @file
- * Compact Forms Drupal module.
+ * Overlays form fields with their respective labels using jQuery.
  */
 
 /**
- * Implements hook_help().
+ * Implements hook_config_info().
  */
-function compact_forms_help($path, $arg) {
-  switch ($path) {
-    case 'admin/help#compact_forms':
-      return '<p>' . t('Makes form fields compact by overlaying the field label on top the field itself using jQuery.') . '</p>';
-  }
+function compact_forms_config_info() {
+  $prefixes['compact_forms.settings'] = array(
+    'label' => t('Compact forms settings'),
+    'group' => t('Configuration'),
+  );
+
+  return $prefixes;
 }
 
 /**
@@ -34,7 +35,7 @@ function compact_forms_menu() {
   $items['admin/config/user-interface/compact_forms'] = array(
     'title' => 'Compact Forms',
     'description' => 'Configure Compact Forms settings.',
-    'page callback' => 'drupal_get_form',
+    'page callback' => 'backdrop_get_form',
     'page arguments' => array('compact_forms_admin_form'),
     'access arguments' => array('administer Compact Forms'),
     'file' => 'compact_forms.admin.inc',
@@ -59,7 +60,7 @@ function compact_forms_pre_render($form) {
 
   // Prepare CSS form ids.
   if (!isset($css_ids)) {
-    $css_ids = explode("\n", variable_get('compact_forms_ids', 'user-login-form'));
+    $css_ids = explode("\n", config_get('compact_forms.settings', 'form_ids'));
     $css_ids = array_filter(array_map('trim', $css_ids));
   }
   // Prepare Form API form ids.
@@ -70,9 +71,9 @@ function compact_forms_pre_render($form) {
     }
   }
   // Prepare form alteration settings.
-  if (!isset($field_size)) {
-    $field_size = variable_get('compact_forms_field_size', '');
-    $descriptions = variable_get('compact_forms_descriptions', 1);
+  if (!isset($field_size) || !isset($descriptions)) {
+    $field_size = config_get('compact_forms.settings', 'field_size');
+    $descriptions = config_get('compact_forms.settings', 'descriptions');
   }
 
   if (in_array($form['form_id']['#value'], $form_ids) || (isset($form['#id']) && in_array($form['#id'], $css_ids))) {
@@ -143,16 +144,16 @@ function _compact_forms_resize_fields(&$form, $field_size, $descriptions) {
  *   An array containing CSS form ids.
  */
 function _compact_forms_include_js($css_ids) {
-  $path = drupal_get_path('module', 'compact_forms');
-  drupal_add_js($path . '/compact_forms.js');
-  drupal_add_css($path . '/compact_forms.css');
+  $path = backdrop_get_path('module', 'compact_forms');
+  backdrop_add_js($path . '/js/compact_forms.js');
+  backdrop_add_css($path . '/css/compact_forms.css');
 
   $settings = array(
     'compactForms' => array(
       'forms' => $css_ids,
-      'stars' => (int) variable_get('compact_forms_stars', 2),
+      'stars' => (int) config_get('compact_forms.settings', 'stars'),
     ),
   );
-  drupal_add_js($settings, 'setting');
+  backdrop_add_js($settings, 'setting');
 }
 

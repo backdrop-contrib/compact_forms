@@ -1,25 +1,32 @@
 <?php
-
 /**
  * @file
- * Installation functions for Compact Forms module.
+ * Install, update, and uninstall functions for the Compact Forms module.
  */
 
 /**
- * Implements hook_uninstall().
+ * Implements hook_update_last_removed().
  */
-function compact_forms_uninstall() {
-  variable_del('compact_forms_colons');
-  variable_del('compact_forms_descriptions');
-  variable_del('compact_forms_field_size');
-  variable_del('compact_forms_ids');
-  variable_del('compact_forms_stars');
+function compact_forms_update_last_removed() {
+  return 7000;
 }
 
 /**
- * Remove 'compact_forms_colons' variable.
+ * Move settings from variables to config.
  */
-function compact_forms_update_7000() {
-  variable_del('compact_forms_colons');
+function compact_forms_update_1000() {
+  // Migrate variables to config.
+  $config = config('compact_forms.settings');
+  $config->set('form_ids', update_variable_get('compact_forms_ids', 'user-login-form'));
+  $config->set('descriptions', update_variable_get('compact_forms_descriptions', 1));
+  $config->set('stars', update_variable_get('compact_forms_stars', 2));
+  $config->set('field_size', update_variable_get('compact_forms_field_size', ''));
+  $config->save();
+
+  // Delete variables.
+  update_variable_del('compact_forms_ids');
+  update_variable_del('compact_forms_descriptions');
+  update_variable_del('compact_forms_stars');
+  update_variable_del('compact_forms_field_size');
 }
 
