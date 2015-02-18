@@ -1,7 +1,7 @@
 {
   "_config_name": "compact_forms.settings",
-  "forms_ids": 'user-login-form',
+  "forms_ids": "user-login-form",
   "descriptions": 1,
   "stars": 2,
-  "field_size": ''
+  "field_size": ""
 }

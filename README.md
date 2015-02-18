@@ -44,6 +44,6 @@ complete text.
 Credits
 -------
 
-This module was originally written for Drupal by
-[Tom Sundström](https://github.com/tomsun).
+This module was originally written for Drupal by Tom Sundström
+(https://github.com/tomsun).
 
