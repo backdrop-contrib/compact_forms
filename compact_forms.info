@@ -4,4 +4,5 @@ package = User interface
 version = 1.x-1.0
 backdrop = 1.x
 configure = admin/config/user-interface/compact_forms
+type = module
 
