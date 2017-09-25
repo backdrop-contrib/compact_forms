@@ -1,8 +1,7 @@
 name = Compact Forms
 description = Overlays form fields with their respective labels using jQuery.
-package = User interface
-version = 1.x-1.0
 backdrop = 1.x
-configure = admin/config/user-interface/compact_forms
 type = module
+package = User interface
+configure = admin/config/user-interface/compact_forms
 

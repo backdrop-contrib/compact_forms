@@ -14,8 +14,7 @@ Compact Forms configuration.
 
 - Degrades back to the original form when JavaScript is switched off.
 - Fields like checkboxes are currently not affected.
-- Inspired by [A List Apart](http://www.alistapart.com/articles/makingcompactformsmoreaccessible/)
-
+- Inspired by [A List Apart](https://alistapart.com/article/makingcompactformsmoreaccessible)
 
 Installation
 ------------
@@ -33,17 +32,26 @@ Installation
 
   `$form['#compact_forms'] = FALSE;`
 
+Issues
+------
+
+Bugs and feature requests should be reported in the Issue Queue:
+https://github.com/backdrop-contrib/compact_forms/issues
+
+Current Maintainers
+-------------------
+
+- Peter Anderson (https://github.com/BWPanda)
+
+Credits
+-------
+
+- Ported to Backdrop CMS by Peter Anderson (https://github.com/BWPanda)
+- Originally written for Drupal by Tom Sundström (https://github.com/tomsun)
 
 License
 -------
 
 This project is GPL v2 software. See the LICENSE.txt file in this directory for
 complete text.
-
-
-Credits
--------
-
-This module was originally written for Drupal by Tom Sundström
-(https://github.com/tomsun).
 

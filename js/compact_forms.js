@@ -16,6 +16,9 @@ $.fn.compactForm = function (stars) {
       if (!$label.attr('for')) {
         return;
       }
+      if ($label.hasClass('element-invisible')) {
+        $label.removeClass('element-invisible');
+      }
       var $field = $('#' + $label.attr('for'), context);
       if (!$field.length || !$field.is('input:text,input:password,textarea,input[type=email]')) {
         return;
