@@ -88,7 +88,8 @@ Backdrop.behaviors.compactForms = {
 
     // Safari adds passwords without triggering any event after page load.
     // We therefore need to wait a bit and then check for field values.
-    if ($.browser.safari) {
+    // jQuery 1.9+ removed '.browser' method. Modernizr library recommended instead.
+    if ($.browser && $.browser.safari) {
       setTimeout(Backdrop.compactForms.fixSafari, 200);
     }
   }
