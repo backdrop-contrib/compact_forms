@@ -20,7 +20,11 @@ $.fn.compactForm = function (stars) {
         $label.removeClass('element-invisible');
       }
       var $field = $('#' + $label.attr('for'), context);
-      if (!$field.length || !$field.is('input:text,input:password,textarea,input[type=email]')) {
+      $accepted_types = 'input:text,input:password,textarea,[type=email],' +
+        '[type=tel],[type=url],[type=number],[type=range],[type=date],' +
+        '[type=time],[type=datetime],[type=datetime-local],[type=month],' +
+        '[type=week],[type=color],[type=search]';
+      if (!$field.length || !$field.is($accepted_types)) {
         return;
       }
       // Store the initial field value, in case the browser is going to
