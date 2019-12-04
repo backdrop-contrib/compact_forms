@@ -5,10 +5,35 @@
  */
 
 /**
- * Implements hook_update_last_removed().
+ * Rename config keys.
  */
-function compact_forms_update_last_removed() {
-  return 7000;
+function compact_forms_update_1200() {
+  $config = config('compact_forms.settings');
+
+  // Set new config.
+  $forms = explode("\n", $config->get('form_ids'));
+  $config->set('forms', array_values(array_filter(array_map('trim', $forms))));
+  $config->set('description', $config->get('descriptions'));
+  switch ($config->get('stars')) {
+    case 0:
+      $required = 'none';
+      break;
+    case 2:
+      $required = 'suffix';
+      break;
+    default:
+      $required = 'placeholder';
+  }
+  $config->set('required', $required);
+  $config->set('size', $config->get('field_size'));
+
+  // Delete old config.
+  $config->clear('form_ids');
+  $config->clear('descriptions');
+  $config->clear('stars');
+  $config->clear('field_size');
+
+  $config->save();
 }
 
 /**
@@ -30,3 +55,9 @@ function compact_forms_update_1000() {
   update_variable_del('compact_forms_field_size');
 }
 
+/**
+ * Implements hook_update_last_removed().
+ */
+function compact_forms_update_last_removed() {
+  return 7000;
+}

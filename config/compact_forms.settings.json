@@ -1,7 +1,9 @@
 {
   "_config_name": "compact_forms.settings",
-  "form_ids": "user-login-form",
-  "descriptions": 1,
-  "stars": 2,
-  "field_size": ""
+  "forms": [
+    "user_login_block"
+  ],
+  "description": 1,
+  "required": "placeholder",
+  "size": ""
 }
