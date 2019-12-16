@@ -137,6 +137,7 @@ function _compact_forms_process_fields(&$form, $config) {
       case 'number':
       case 'password':
       case 'password_confirm':
+      case 'search':
       case 'text_format':
       case 'textarea':
       case 'textfield':
