@@ -120,81 +120,90 @@ function _compact_forms_process_fields(&$form, $config) {
   $size = $config->get('size');
 
   foreach (element_children($form) as $key) {
-    switch ($form[$key]['#type']) {
-      case 'email':
-      case 'machine_name':
-      case 'number':
-      case 'password':
-      case 'password_confirm':
-      case 'search':
-      case 'text_format':
-      case 'textarea':
-      case 'textfield':
-      case 'url':
-      case 'webform_email':
-        // Add the title as placeholder text.
-        if (isset($form[$key]['#title'])) {
-          $form[$key]['#attributes']['placeholder'] = $form[$key]['#title'];
-          unset($form[$key]['#title']);
+    if (isset($form[$key]['#type'])) {
+      switch ($form[$key]['#type']) {
+        case 'email':
+        case 'machine_name':
+        case 'number':
+        case 'password':
+        case 'password_confirm':
+        case 'search':
+        case 'text_format':
+        case 'textarea':
+        case 'textfield':
+        case 'url':
+        case 'webform_email':
+          // Add the title as placeholder text.
+          if (isset($form[$key]['#title'])) {
+            $form[$key]['#attributes']['placeholder'] = $form[$key]['#title'];
+            unset($form[$key]['#title']);
 
-          if ($required == 'placeholder') {
-            $form[$key]['#attributes']['placeholder'] .= ' *';
+            if ($required == 'placeholder') {
+              $form[$key]['#attributes']['placeholder'] .= ' *';
+            }
           }
-        }
 
-      case 'select':
-      case 'select_or_other':
-        // Add the title as the first, empty option.
-        if (isset($form[$key]['#title'])) {
-          $form[$key]['#empty_option'] = '- ' . $form[$key]['#title'];
-          unset($form[$key]['#title']);
+        case 'select':
+        case 'select_or_other':
+          // Add the title as the first, empty option.
+          if (isset($form[$key]['#title'])) {
+            $form[$key]['#empty_option'] = '- ' . $form[$key]['#title'];
+            unset($form[$key]['#title']);
 
-          if ($required == 'placeholder') {
-            $form[$key]['#empty_option'] .= ' * -';
+            if ($required == 'placeholder') {
+              $form[$key]['#empty_option'] .= ' * -';
+            }
+            else {
+              $form[$key]['#empty_option'] .= ' -';
+            }
           }
-          else {
-            $form[$key]['#empty_option'] .= ' -';
-          }
-        }
 
-      case 'email':
-      case 'machine_name':
-      case 'number':
-      case 'password':
-      case 'password_confirm':
-      case 'search':
-      case 'select':
-      case 'select_or_other':
-      case 'text_format':
-      case 'textarea':
-      case 'textfield':
-      case 'url':
-      case 'webform_email':
-        // Add the required element as a suffix.
-        if (isset($form[$key]['#title']) && $required == 'suffix') {
-          $form[$key]['#field_suffix'] = '<abbr class="form-required" title="' . t('This field is required.') . '">*</abbr>';
-        }
-
-        // Override field size.
-        if (!empty($size)) {
-          if (in_array($form[$key]['#type'], array('text_format', 'textarea'))) {
-            $form[$key]['#cols'] = $size;
+        case 'email':
+        case 'machine_name':
+        case 'number':
+        case 'password':
+        case 'password_confirm':
+        case 'search':
+        case 'select':
+        case 'select_or_other':
+        case 'text_format':
+        case 'textarea':
+        case 'textfield':
+        case 'url':
+        case 'webform_email':
+          // Add the required element as a suffix.
+          if (isset($form[$key]['#title']) && $required == 'suffix') {
+            $form[$key]['#field_suffix'] = '<abbr class="form-required" title="' . t('This field is required.') . '">*</abbr>';
           }
-          else {
-            $form[$key]['#size'] = $size;
-          }
-        }
 
-        // Hide description.
-        if ($description && isset($form[$key]['#description'])) {
-          unset($form[$key]['#description']);
-        }
-        break;
-      default:
-        // Recurse into all other elements with children.
-        if (!empty(element_children($form[$key]))) {
-          _compact_forms_process_fields($form[$key], $config);
-        }
+          // Override field size.
+          if (!empty($size)) {
+            if (in_array($form[$key]['#type'], array('text_format', 'textarea'))) {
+              $form[$key]['#cols'] = $size;
+            }
+            else {
+              $form[$key]['#size'] = $size;
+            }
+          }
+
+          // Hide description.
+          if ($description && isset($form[$key]['#description'])) {
+            unset($form[$key]['#description']);
+          }
+          break;
+
+        default:
+          // Recurse through all other element types with children.
+          if (!empty(element_children($form[$key]))) {
+            _compact_forms_process_fields($form[$key], $config);
+          }
+      }
+    }
+    else {
+      // Recurse through any children.
+      if (!empty(element_children($form[$key]))) {
+        _compact_forms_process_fields($form[$key], $config);
+      }
     }
   }
 }
