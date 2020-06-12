@@ -116,10 +116,12 @@ function compact_forms_form_alter(&$form, $form_state, $form_id) {
  */
 function _compact_forms_process_fields(&$form, $config) {
   $description = $config->get('description');
-  $required = $config->get('required');
+  $required_marker = $config->get('required');
   $size = $config->get('size');
 
   foreach (element_children($form) as $key) {
+    $required = isset($form[$key]['#required']) ? $form[$key]['#required'] : FALSE;
+    
     if (isset($form[$key]['#type'])) {
       switch ($form[$key]['#type']) {
         case 'email':
@@ -138,7 +140,7 @@ function _compact_forms_process_fields(&$form, $config) {
             $form[$key]['#attributes']['placeholder'] = $form[$key]['#title'];
             unset($form[$key]['#title']);
 
-            if ($required == 'placeholder') {
+            if ($required && $required_marker == 'placeholder') {
               $form[$key]['#attributes']['placeholder'] .= ' *';
             }
           }
@@ -150,7 +152,7 @@ function _compact_forms_process_fields(&$form, $config) {
             $form[$key]['#empty_option'] = '- ' . $form[$key]['#title'];
             unset($form[$key]['#title']);
 
-            if ($required == 'placeholder') {
+            if ($required && $required_marker == 'placeholder') {
               $form[$key]['#empty_option'] .= ' * -';
             }
             else {
@@ -172,7 +174,7 @@ function _compact_forms_process_fields(&$form, $config) {
         case 'url':
         case 'webform_email':
           // Add the required element as a suffix.
-          if (isset($form[$key]['#title']) && $required == 'suffix') {
+          if (isset($form[$key]['#title']) && $required && $required_marker == 'suffix') {
             $form[$key]['#field_suffix'] = '<abbr class="form-required" title="' . t('This field is required.') . '">*</abbr>';
           }
 
