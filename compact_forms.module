@@ -52,7 +52,7 @@ function compact_forms_admin_form($form, &$form_state) {
   $form['forms'] = array(
     '#type' => 'textarea',
     '#title' => t('Forms'),
-    '#description' => t("Enter one form ID per line. Look for the 'form_id' element in the form's markup (e.g. 'contact_site_form')."),
+    '#description' => t("Enter one form ID per line. Look for the 'form_id' element in the form's markup (e.g. 'contact_site_form'). You can use '*' as a wildcard to match multiple forms."),
     '#default_value' => implode("\n", $config->get('forms')),
     '#rows' => 5,
   );
@@ -98,14 +98,31 @@ function compact_forms_admin_form_validate($form, &$form_state) {
  * Implements hook_form_alter().
  */
 function compact_forms_form_alter(&$form, $form_state, $form_id) {
+  // If the #compact_forms property is FALSE, don't process this form.
+  if (isset($form['#compact_forms']) && !$form['#compact_forms']) {
+    return;
+  }
+
+  $process = FALSE;
   $config = config('compact_forms.settings');
+  $forms = $config->get('forms');
 
-  if (in_array($form_id, $config->get('forms'))) {
-    // If the #compact_forms property is FALSE, don't process this form.
-    if (isset($form['#compact_forms']) && !$form['#compact_forms']) {
-      return;
+  if (in_array($form_id, $forms)) {
+    $process = TRUE;
+  }
+  else {
+    foreach ($forms as $fid) {
+      if (strpos($fid, '*') !== FALSE) {
+        $pattern = '/^' . str_replace('*', '\w*', $fid) . '$/';
+        if (preg_match($pattern, $form_id) === 1) {
+          $process = TRUE;
+          break;
+        }
+      }
     }
+  }
 
+  if ($process) {
     // Process fields.
     _compact_forms_process_fields($form, $config);
   }
@@ -121,7 +138,7 @@ function _compact_forms_process_fields(&$form, $config) {
 
   foreach (element_children($form) as $key) {
     $required = isset($form[$key]['#required']) ? $form[$key]['#required'] : FALSE;
-    
+
     if (isset($form[$key]['#type'])) {
       switch ($form[$key]['#type']) {
         case 'email':
