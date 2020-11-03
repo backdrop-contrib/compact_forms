@@ -166,14 +166,21 @@ function _compact_forms_process_fields(&$form, $config) {
         case 'select_or_other':
           // Add the title as the first, empty option.
           if (isset($form[$key]['#title'])) {
-            $form[$key]['#empty_option'] = '- ' . $form[$key]['#title'];
+            $empty_option = '- ' . $form[$key]['#title'];
             unset($form[$key]['#title']);
 
             if ($required && $required_marker == 'placeholder') {
-              $form[$key]['#empty_option'] .= ' * -';
+              $empty_option .= ' * -';
             }
             else {
-              $form[$key]['#empty_option'] .= ' -';
+              $empty_option .= ' -';
+            }
+
+            if (array_key_exists('_none', $form[$key]['#options'])) {
+              $form[$key]['#options']['_none'] = $empty_option;
+            }
+            else {
+              $form[$key]['#empty_option'] = $empty_option;
             }
           }
 
