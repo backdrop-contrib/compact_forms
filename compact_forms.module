@@ -140,6 +140,14 @@ function _compact_forms_process_fields(&$form, $config) {
     $required = isset($form[$key]['#required']) ? $form[$key]['#required'] : FALSE;
 
     if (isset($form[$key]['#type'])) {
+      if ($form['#form_id'] == 'views_exposed_form') {
+        foreach ($form['#info'] as $exposed_key => $exposed_filter) {
+          if ($exposed_filter['value'] == $key) {
+            $form[$key]['#title'] = $exposed_filter['label'];
+            unset($form['#info'][$exposed_key]['label']);
+          }
+        }
+      }
       switch ($form[$key]['#type']) {
         case 'email':
         case 'machine_name':
