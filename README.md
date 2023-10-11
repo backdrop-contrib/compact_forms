@@ -35,7 +35,7 @@ https://github.com/backdrop-contrib/compact_forms/issues
 Current Maintainers
 -------------------
 
-- [Peter Anderson](https://github.com/BWPanda)
+- Seeking maintainer(s)
 
 Credits
 -------
